@@ -1,0 +1,139 @@
+.starthost-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+}
+
+.starthost-container h1 {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.starthost-container input {
+    width: 200px;
+    height: 30px;
+    border: 1px solid #000;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 15px;
+    text-align: center;
+}
+
+.starthost-roomname {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.starthost-name {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.starthost-name button {
+    margin: 20px 0;
+    width: 200px;
+    padding: 10px 20px;
+    background-color: #2f7fff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.starthost-back {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #ff2f2f;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.horizontal-line {
+    width: 70%;
+    height: 2px;
+    background-color: #000;
+    margin: 20px 0;
+}
+
+.startjoin-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+}
+
+.startjoin-container h1 {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.startjoin-container select {
+    width: 200px;
+    border: 1px solid #000;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 15px;
+    text-align: center;
+}
+
+.startjoin-roomname {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.startjoin-name {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.startjoin-name input {
+    width: 200px;
+    height: 30px;
+    border: 1px solid #000;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 15px;
+    text-align: center;
+}
+
+.startjoin-name button {
+    margin: 20px 0;
+    width: 200px;
+    padding: 10px 20px;
+    background-color: #2f7fff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.startjoin-back {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #ff2f2f;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}

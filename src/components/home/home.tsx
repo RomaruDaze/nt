@@ -1,16 +1,17 @@
 import "./home.css";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import io from "socket.io-client";
-
-const socket = io("http://172.16.232.96:5000");
+import { useSocket } from "../SocketContext";
 
 function Home() {
   const navigate = useNavigate();
+  const socket = useSocket();
+
   const HandleId = (id: string) => {
-    if (id == "host") {
+    if (id === "host") {
       navigate("/host");
-    } else if (id == "join") {
+    } else if (id === "join") {
+      socket.emit("requestRoomNames");
       navigate("/join");
     }
   };
@@ -21,9 +22,9 @@ function Home() {
     });
 
     return () => {
-      socket.disconnect();
+      console.log("Disconnected from Socket.IO server");
     };
-  }, []);
+  }, [socket]);
 
   return (
     <div className="main-container">
