@@ -9,12 +9,9 @@ function Join() {
   const [roomNames, setRoomNames] = useState<string[]>([]);
 
   useEffect(() => {
-    // Listen for the 'sentRoomName' event to receive room names
     socket.on("sentRoomName", (data) => {
       setRoomNames(data);
     });
-
-    // Emit a request for room names when the component mounts
     socket.emit("requestRoomNames");
 
     return () => {
