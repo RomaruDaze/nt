@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start": "tsc -b && vite build && python3 app.py"
   },
   "dependencies": {
     "express": "^4.21.2",
