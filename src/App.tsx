@@ -1,22 +1,25 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Main from "./components/main/main";
-import Host from "./components/hostRoom/host";
-import Wait from "./components/waitRoom/wait";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Home from "./components/home/home";
+import Host from "./components/startRoom/host";
+import Join from "./components/startRoom/join";
+import WaitJoin from "./components/waitRoom/waitJoin";
+import WaitHost from "./components/waitRoom/waitHost";
 import HostGame from "./components/gameRoom/hostGame/hostgame";
 import JoinGame from "./components/gameRoom/joinGame/joingame";
-import "./App.css";
 
 function App() {
   return (
-    <BrowserRouter>
+    <Router>
       <Routes>
-        <Route path="/" element={<Main />} />
+        <Route path="/" element={<Home />} />
         <Route path="/host" element={<Host />} />
+        <Route path="/join" element={<Join />} />
+        <Route path="/waitjoin" element={<WaitJoin />} />
+        <Route path="/waithost" element={<WaitHost />} />
         <Route path="/hostgame" element={<HostGame />} />
-        <Route path="/wait" element={<Wait />} />
         <Route path="/joingame" element={<JoinGame />} />
       </Routes>
-    </BrowserRouter>
+    </Router>
   );
 }
 

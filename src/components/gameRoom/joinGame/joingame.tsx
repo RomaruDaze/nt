@@ -1,7 +1,5 @@
-import "./joingame.css";
-
 function JoinGame() {
-  return <div className="joingame-container">Hello World</div>;
+  return <div>JoinGame</div>;
 }
 
 export default JoinGame;
