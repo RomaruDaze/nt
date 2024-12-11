@@ -10,6 +10,24 @@
     align-items: center;
 }
 
+.game-room-ball-header h1 {
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.game-room-ball-header p {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: -10px;
+}
+
+.game-room-ball-speaker {
+    background-color: #000000;
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
 .game-room-ball-player-list {
     display: flex;
     flex-wrap: wrap;

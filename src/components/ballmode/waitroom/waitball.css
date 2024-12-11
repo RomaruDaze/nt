@@ -119,3 +119,18 @@
 .black {
     background-color: #fff;
 }
+
+.start-button {
+    background-color: #ff2828;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    font-size: 20px;
+    font-weight: bold;
+    margin: 10px;
+    position: absolute;
+    bottom: 10px;
+    right: 0;
+    left: 0;
+}

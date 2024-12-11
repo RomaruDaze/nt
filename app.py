@@ -38,7 +38,7 @@ def handle_disconnect():
 @socketio.on('newPlayer')
 def handle_new_player(name):
     if name in connected_players:
-        emit('nameTaken', {'message': 'この名前はすでに使用されています。'}, to=request.sid)
+        emit('nameTaken', {'message': 'この名前はすでに使用れています。'}, to=request.sid)
     else:
         connected_players.append(name)  
         emit('updatePlayerList', connected_players, broadcast=True) 
@@ -62,6 +62,17 @@ def handle_start_game(name):
 @socketio.on('requestPlayerList')
 def handle_request_player_list():
     emit('updatePlayerList', {'andgroup': andgroup, 'butgroup': butgroup}, to=request.sid)
+
+@socketio.on('playerClicked')
+def handle_player_click(data):
+    player = data['player']
+    print(f"{player} was clicked.")
+    
+    # Emit to all clients to notify them of the clicked player
+    emit('playerClickedNotification', {'player': player}, broadcast=True)
+    
+    # Emit the startGame event with the selected player
+    emit('startGame', {'selectedPlayer': player}, broadcast=True)
 
 #Run Server
 if __name__ == '__main__':
