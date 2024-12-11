@@ -1,0 +1,27 @@
+.game-room-ball-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.game-room-ball-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.game-room-ball-player-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.game-room-ball-player-list button {
+    margin: 10px;
+    color: white;
+    background-color: #0078d3;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 24px;
+}

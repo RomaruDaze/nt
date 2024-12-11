@@ -1,12 +1,9 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Home from "./components/home/home";
-import Host from "./components/startRoom/host";
-import Join from "./components/startRoom/join";
-import WaitJoin from "./components/waitRoom/waitJoin";
-import WaitHost from "./components/waitRoom/waitHost";
-import HostGame from "./components/gameRoom/hostGame/hostgame";
-import JoinGame from "./components/gameRoom/joinGame/joingame";
 import { SocketProvider } from "./components/SocketContext";
+import Home from "./components/home/home";
+import WaitBall from "./components/ballmode/waitroom/waitball";
+import GameRoomBall from "./components/ballmode/gameroom/gameroomball";
+// import WaitRoulette from "./components/roulette/waitroom/waitroulette";
 
 function App() {
   return (
@@ -14,12 +11,9 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/host" element={<Host />} />
-          <Route path="/join" element={<Join />} />
-          <Route path="/waitjoin" element={<WaitJoin />} />
-          <Route path="/waithost" element={<WaitHost />} />
-          <Route path="/hostgame" element={<HostGame />} />
-          <Route path="/joingame" element={<JoinGame />} />
+          <Route path="/waitball" element={<WaitBall />} />
+          <Route path="/gameroomball" element={<GameRoomBall />} />
+          {/* <Route path="/waitroulette" element={<WaitRoulette />} /> */}
         </Routes>
       </Router>
     </SocketProvider>

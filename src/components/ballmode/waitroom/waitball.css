@@ -1,0 +1,121 @@
+.waitball-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.waitball-header {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.waitball-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.waitball-content input {
+    width: 200px;
+    height: 50px;
+    font-size: 20px;
+    font-weight: bold;
+    margin: 10px;
+    border-radius: 5px;
+    padding: 10px 20px;
+    text-align: center;
+}
+
+.waitball-content input:focus {
+    outline-color: #ff2222;
+}
+
+.waitball-content button {
+    width: 200px;
+    height: 50px;
+    font-size: 20px;
+    font-weight: bold;
+    margin: 10px;
+    background-color: #2285ff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+}
+
+.waitball-content button:hover {
+    background-color: #000;
+    color: #fff;
+}
+
+.waitball-content button:active {
+    background-color: #000;
+    color: #fff;
+}
+
+.back-button {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: #ff2222;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    margin-top: 10px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.back-button:hover {
+    background-color: #000;
+    color: #fff;
+}
+
+.back-button:active {
+    background-color: #000;
+    color: #fff;
+}
+
+.horizontal-line {
+    width: 100%;
+    height: 2px;
+    background-color: #000;
+    margin: 10px 0;
+}
+
+.waitball-player-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.waitball-player-list-item {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.waitball-player-list-item ul {
+    padding: 0;
+    text-align: center;
+}
+
+.waitball-player-list-item li {
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin: 10px 0;
+    list-style-type: none;
+}
+
+.green {
+    background-color: #ee0000;
+    color: #fff;
+}
+
+.black {
+    background-color: #fff;
+}

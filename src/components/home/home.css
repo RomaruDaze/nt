@@ -1,4 +1,4 @@
-.main-container {
+.home-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -10,32 +10,32 @@
     position: absolute;
 }
 
-.main-header {
+.home-header {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
-.main-header img {
+.home-header img {
     width: 100px;
     height: auto;
 }
 
-.main-header h1 {
+.home-header h1 {
     font-size: 30px;
     font-weight: bold;
     margin-top: -10px;
 }
 
-.main-content {
+.home-content {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
-.main-content button {
+.home-content button {
     width: 200px;
     height: 50px;
     font-size: 20px;
@@ -43,7 +43,7 @@
     margin: 10px;
 }
 
-.main-content button:hover {
+.home-content button:hover {
     background-color: #000;
     color: #fff;
 }

@@ -1,11 +1,12 @@
-from flask import Flask, send_from_directory
-from flask_socketio import SocketIO
+from flask import Flask, send_from_directory, request
+from flask_socketio import SocketIO, emit
 from flask_cors import CORS
 import time
 import os
+import random
 
 app = Flask(__name__, static_folder='dist', static_url_path='')
-CORS(app, resources={r"/*": {"origins": "http://172.16.232.96:5000"}})
+CORS(app, resources={r"/*": {"origins": "http://192.168.179.22:5000"}})
 socketio = SocketIO(app)
 
 
@@ -24,29 +25,43 @@ def static_proxy(path):
 
 
 #Effect
-room_names = []  
+connected_players = []
 
 @socketio.on('connect')
 def handle_connect():
     print(time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time())) + ' Client connected')
-    socketio.emit('sentRoomName', room_names)
 
 @socketio.on('disconnect')
 def handle_disconnect():
     print(time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time())) + ' Client disconnected')
 
-@socketio.on('requestRoomNames')
-def handle_request_room_names():
-    socketio.emit('sentRoomName', room_names)  
+@socketio.on('newPlayer')
+def handle_new_player(name):
+    if name in connected_players:
+        emit('nameTaken', {'message': 'この名前はすでに使用されています。'}, to=request.sid)
+    else:
+        connected_players.append(name)  
+        emit('updatePlayerList', connected_players, broadcast=True) 
 
-@socketio.on('sendRoomName')
-def handle_send_room_name(data):
-    if data not in room_names:  
-        room_names.append(data) 
-    print(time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time())) + ' Send Room Name: ' + data) 
-    socketio.emit('sentRoomName', room_names)
+andgroup = []
+butgroup = []
 
+@socketio.on('startGame')
+def handle_start_game(name):
+    global andgroup, butgroup
+    if random.choice([True, False]):
+        andgroup.append(name)
+    else:
+        butgroup.append(name)
 
+    # Log the updated groups
+    print(f"Updated groups: AND: {andgroup}, BUT: {butgroup}")
+    
+    emit('gameStarted', {'message': 'Game is starting!', 'andgroup': andgroup, 'butgroup': butgroup}, broadcast=True)
+
+@socketio.on('requestPlayerList')
+def handle_request_player_list():
+    emit('updatePlayerList', {'andgroup': andgroup, 'butgroup': butgroup}, to=request.sid)
 
 #Run Server
 if __name__ == '__main__':

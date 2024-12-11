@@ -7,15 +7,6 @@ function Home() {
   const navigate = useNavigate();
   const socket = useSocket();
 
-  const HandleId = (id: string) => {
-    if (id === "host") {
-      navigate("/host");
-    } else if (id === "join") {
-      socket.emit("requestRoomNames");
-      navigate("/join");
-    }
-  };
-
   useEffect(() => {
     socket.on("connect", () => {
       console.log("Connected to Socket.IO server");
@@ -27,13 +18,14 @@ function Home() {
   }, [socket]);
 
   return (
-    <div className="main-container">
-      <div className="main-header">
+    <div className="home-container">
+      <div className="home-header">
         <h1>ナゲTalk</h1>
       </div>
-      <div className="main-content">
-        <button onClick={() => HandleId("host")}>ホスト</button>
-        <button onClick={() => HandleId("join")}>参加</button>
+      <div className="home-content">
+        <button onClick={() => navigate("/waitball")}>ホール投げ</button>
+        {/* <button onClick={() => navigate("/waitroulette")}>ルーレット</button> */}
+        <button>ルーレット</button>
       </div>
     </div>
   );
