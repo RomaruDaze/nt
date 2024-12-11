@@ -24,8 +24,7 @@ function Home() {
       </div>
       <div className="home-content">
         <button onClick={() => navigate("/waitball")}>ホール投げ</button>
-        {/* <button onClick={() => navigate("/waitroulette")}>ルーレット</button> */}
-        <button>ルーレット</button>
+        <button onClick={() => navigate("/waitroulette")}>ルーレット</button>
       </div>
     </div>
   );

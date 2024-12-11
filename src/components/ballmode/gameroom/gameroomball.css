@@ -58,3 +58,27 @@
     right: 0;
     left: 0;
 }
+
+.intercept-block {
+    display: none;
+    position: absolute;
+    text-align: center;
+    background-color: #000000;
+    color: #ffffff;
+    padding: 10px;
+    border-radius: 5px;
+    height: 100%;
+    width: 100%;
+    opacity: 0.9;
+}
+
+.intercept-block p {
+    margin-top: 50%;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.intercept-block h1 {
+    font-size: 40px;
+    font-weight: bold;
+}

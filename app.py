@@ -80,6 +80,15 @@ def handle_intercept(data):
     selected_player = data['selectedPlayer']
     emit('interceptNotification', {'intercepter': my_name, 'intercepted': selected_player}, broadcast=True)
 
+@socketio.on('startTimer')
+def handle_start_timer(data):
+    time = data['time']
+    # Broadcast the timer to all clients
+    emit('timerUpdate', {'time': time}, broadcast=True)
+
+
+
+
 #Run Server
 if __name__ == '__main__':
     print("Server is running on port 5000")

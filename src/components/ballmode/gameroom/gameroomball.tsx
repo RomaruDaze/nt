@@ -13,9 +13,9 @@ function GameRoomBall() {
   const [butGroup, setButGroup] = useState<string[]>([]);
   const [myRole, setMyRole] = useState<string | null>(null);
   const [selectedPlayer, setSelectedPlayer] = useState<string | null>(null);
-  const [intercepted, setIntercepted] = useState<string | null>(null);
   const [intercepter, setIntercepter] = useState<string | null>(null);
-  const [interceptMessage, setInterceptMessage] = useState<string | null>(null);
+  const [intercepted, setIntercepted] = useState<string | null>(null);
+  const [timer, setTimer] = useState<number>(0);
 
   useEffect(() => {
     socket.on(
@@ -83,39 +83,37 @@ function GameRoomBall() {
 
   //intercept
   const handleIntercept = () => {
-    if (selectedPlayer &git& selectedPlayer !== myName) {
-      const message = `${myName} intercepted ${selectedPlayer}`;
-      setInterceptMessage(message);
+    if (selectedPlayer && selectedPlayer !== myName) {
       socket.emit("intercept", { myName, selectedPlayer });
+      socket.emit("broadcastIntercept", {
+        intercepter: myName,
+        intercepted: selectedPlayer,
+      });
+      setIntercepter(myName);
+      setIntercepted(selectedPlayer);
+      setTimer(60);
+      socket.emit("startTimer", { time: 60 });
     }
   };
 
   const isInterceptButtonDisabled =
-    intercepted === myName && ||
-    (intercepter !== myName && intercepted !== myName);
+    selectedPlayer === myName && selectedPlayer !== null;
+
+  const isIntercepted = intercepted !== null;
 
   useEffect(() => {
     socket.on(
       "interceptNotification",
       (data: { intercepter: string; intercepted: string }) => {
-        setIntercepted(data.intercepted);
-        setIntercepter(data.intercepter);
-        console.log("intercepted: " + data.intercepted);
-        console.log("intercepter: " + data.intercepter);
-        console.log(intercepted);
-        console.log(intercepter);
-
         if (data.intercepted === myName && data.intercepter !== myName) {
-          alert("You got intercepted");
-        } else if (
-          data.intercepted !== myName &&
-          data.intercepted !== myName &&
-          data.intercepter !== myName
-        ) {
-          alert(`${data.intercepted} got intercepted`);
+          console.log("You got intercepted");
+        } else if (data.intercepted !== myName && data.intercepter !== myName) {
+          console.log(`${data.intercepted} got intercepted`);
         } else if (data.intercepted !== myName && data.intercepter === myName) {
-          alert(`You intercepted ${data.intercepted}`);
+          console.log(`You intercepted ${data.intercepted}`);
         }
+        setIntercepter(data.intercepter);
+        setIntercepted(data.intercepted);
       }
     );
 
@@ -123,6 +121,37 @@ function GameRoomBall() {
       socket.off("interceptNotification");
     };
   }, [socket, myName]);
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout | null = null;
+
+    if (intercepted !== null) {
+      interval = setInterval(() => {
+        setTimer((prev) => {
+          if (prev <= 1) {
+            clearInterval(interval!);
+            setIntercepted(null);
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    }
+
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [intercepted]);
+
+  useEffect(() => {
+    socket.on("timerUpdate", (data: { time: number }) => {
+      setTimer(data.time);
+    });
+
+    return () => {
+      socket.off("timerUpdate");
+    };
+  }, []);
 
   return (
     <div className="game-room-ball-container">
@@ -171,8 +200,14 @@ function GameRoomBall() {
       <button className="back-button" onClick={() => navigate("/")}>
         戻る
       </button>
-      {interceptMessage && <p>{interceptMessage}</p>}
-      {intercepted && <p>Intercepter: {intercepted}</p>}
+      <div
+        className="intercept-block"
+        style={{ display: isIntercepted ? "block" : "none" }}
+      >
+        <p>発散者</p>
+        <h1>{intercepter}</h1>
+        <p>{timer}</p>
+      </div>
     </div>
   );
 }
