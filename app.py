@@ -74,6 +74,12 @@ def handle_player_click(data):
     # Emit the startGame event with the selected player
     emit('startGame', {'selectedPlayer': player}, broadcast=True)
 
+@socketio.on('intercept')
+def handle_intercept(data):
+    my_name = data['myName']
+    selected_player = data['selectedPlayer']
+    emit('interceptNotification', {'intercepter': my_name, 'intercepted': selected_player}, broadcast=True)
+
 #Run Server
 if __name__ == '__main__':
     print("Server is running on port 5000")

@@ -13,6 +13,9 @@ function GameRoomBall() {
   const [butGroup, setButGroup] = useState<string[]>([]);
   const [myRole, setMyRole] = useState<string | null>(null);
   const [selectedPlayer, setSelectedPlayer] = useState<string | null>(null);
+  const [intercepted, setIntercepted] = useState<string | null>(null);
+  const [intercepter, setIntercepter] = useState<string | null>(null);
+  const [interceptMessage, setInterceptMessage] = useState<string | null>(null);
 
   useEffect(() => {
     socket.on(
@@ -36,10 +39,7 @@ function GameRoomBall() {
 
     socket.on(
       "gameStarted",
-      (data: {
-        andgroup: string[];
-        butgroup: string[];
-      }) => {
+      (data: { andgroup: string[]; butgroup: string[] }) => {
         setAndGroup(data.andgroup);
         setButGroup(data.butgroup);
         if (data.andgroup.includes(myName)) {
@@ -81,6 +81,49 @@ function GameRoomBall() {
 
   const isButtonDisabled = selectedPlayer !== myName && selectedPlayer !== null;
 
+  //intercept
+  const handleIntercept = () => {
+    if (selectedPlayer &git& selectedPlayer !== myName) {
+      const message = `${myName} intercepted ${selectedPlayer}`;
+      setInterceptMessage(message);
+      socket.emit("intercept", { myName, selectedPlayer });
+    }
+  };
+
+  const isInterceptButtonDisabled =
+    intercepted === myName && ||
+    (intercepter !== myName && intercepted !== myName);
+
+  useEffect(() => {
+    socket.on(
+      "interceptNotification",
+      (data: { intercepter: string; intercepted: string }) => {
+        setIntercepted(data.intercepted);
+        setIntercepter(data.intercepter);
+        console.log("intercepted: " + data.intercepted);
+        console.log("intercepter: " + data.intercepter);
+        console.log(intercepted);
+        console.log(intercepter);
+
+        if (data.intercepted === myName && data.intercepter !== myName) {
+          alert("You got intercepted");
+        } else if (
+          data.intercepted !== myName &&
+          data.intercepted !== myName &&
+          data.intercepter !== myName
+        ) {
+          alert(`${data.intercepted} got intercepted`);
+        } else if (data.intercepted !== myName && data.intercepter === myName) {
+          alert(`You intercepted ${data.intercepted}`);
+        }
+      }
+    );
+
+    return () => {
+      socket.off("interceptNotification");
+    };
+  }, [socket, myName]);
+
   return (
     <div className="game-room-ball-container">
       <div className="game-room-ball-header">
@@ -117,9 +160,19 @@ function GameRoomBall() {
           </button>
         ))}
       </div>
+      <button
+        className="intercept"
+        onClick={handleIntercept}
+        disabled={isInterceptButtonDisabled}
+        style={{ backgroundColor: isInterceptButtonDisabled ? "gray" : "red" }}
+      >
+        発散
+      </button>
       <button className="back-button" onClick={() => navigate("/")}>
         戻る
       </button>
+      {interceptMessage && <p>{interceptMessage}</p>}
+      {intercepted && <p>Intercepter: {intercepted}</p>}
     </div>
   );
 }
