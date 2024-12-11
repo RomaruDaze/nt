@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useSocket } from "../../SocketContext";
 import "./waitroulette.css";
 
-function WaitBall() {
+function WaitRoulette() {
   const navigate = useNavigate();
   const socket = useSocket();
   const [name, setName] = useState("");
@@ -27,12 +27,10 @@ function WaitBall() {
   }, [socket, navigate]);
 
   const handleJoin = () => {
-    if (name && !players.includes(name)) {
+    if (name) {
       socket.emit("newPlayer", name);
       setMyName(name);
       setName("");
-    } else if (players.includes(name)) {
-      alert("この名前はすでに使用されています。");
     }
   };
 
@@ -90,4 +88,4 @@ function WaitBall() {
   );
 }
 
-export default WaitBall;
+export default WaitRoulette;

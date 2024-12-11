@@ -37,11 +37,9 @@ def handle_disconnect():
 
 @socketio.on('newPlayer')
 def handle_new_player(name):
-    if name in connected_players:
-        emit('nameTaken', {'message': 'この名前はすでに使用れています。'}, to=request.sid)
-    else:
-        connected_players.append(name)  
-        emit('updatePlayerList', connected_players, broadcast=True) 
+    if name not in connected_players:
+        connected_players.append(name)
+    emit('updatePlayerList', connected_players, broadcast=True)
 
 andgroup = []
 butgroup = []
@@ -54,7 +52,7 @@ def handle_start_game(name):
     else:
         butgroup.append(name)
 
-    # Log the updated groups
+
     print(f"Updated groups: AND: {andgroup}, BUT: {butgroup}")
     
     emit('gameStarted', {'message': 'Game is starting!', 'andgroup': andgroup, 'butgroup': butgroup}, broadcast=True)
@@ -68,10 +66,8 @@ def handle_player_click(data):
     player = data['player']
     print(f"{player} was clicked.")
     
-    # Emit to all clients to notify them of the clicked player
     emit('playerClickedNotification', {'player': player}, broadcast=True)
     
-    # Emit the startGame event with the selected player
     emit('startGame', {'selectedPlayer': player}, broadcast=True)
 
 @socketio.on('intercept')
@@ -83,7 +79,6 @@ def handle_intercept(data):
 @socketio.on('startTimer')
 def handle_start_timer(data):
     time = data['time']
-    # Broadcast the timer to all clients
     emit('timerUpdate', {'time': time}, broadcast=True)
 
 @socketio.on('makeRoulette')
@@ -91,17 +86,14 @@ def handle_make_roulette(data):
     and_group = data.get('andGroup', [])
     but_group = data.get('butGroup', [])
     
-    # Create a dictionary with names and roles
     roulette_dict = {name: '肯定的' for name in and_group}
     roulette_dict.update({name: '批判的' for name in but_group})
     
-    # Emit the created dictionary to all clients
     emit('rouletteCreated', roulette_dict, broadcast=True)
 
 @socketio.on('spinRoulette')
 def handle_spin_roulette(data):
     prize_number = data.get('prizeNumber')
-    # Broadcast the spin event to all clients
     emit('spinRoulette', {'prizeNumber': prize_number}, broadcast=True)
 
 @socketio.on('spinResult')

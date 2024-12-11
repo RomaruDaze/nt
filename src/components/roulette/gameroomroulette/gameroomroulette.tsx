@@ -30,7 +30,7 @@ function Gameroomroulette() {
             setMyRole(null);
           }
         } else {
-          console.error("Received data is not in the expected format:", groups);
+          console.log("Received data is not in the expected format:", groups);
         }
       }
     );
