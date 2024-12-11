@@ -1,6 +1,7 @@
 import { useLocation } from "react-router-dom";
 import { useSocket } from "../../SocketContext";
 import { useEffect, useState } from "react";
+import Roulette from "./roulette";
 import "./gameroomroulette.css";
 
 function Gameroomroulette() {
@@ -10,6 +11,9 @@ function Gameroomroulette() {
   const [andGroup, setAndGroup] = useState<string[]>([]);
   const [butGroup, setButGroup] = useState<string[]>([]);
   const [myRole, setMyRole] = useState<string | null>(null);
+  const [rouletteData, setRouletteData] = useState<{ [key: string]: string }>(
+    {}
+  );
 
   useEffect(() => {
     socket.on(
@@ -48,11 +52,21 @@ function Gameroomroulette() {
 
     socket.emit("requestPlayerList");
 
+    socket.on("rouletteCreated", (data: { [key: string]: string }) => {
+      console.log("Received roulette data:", data);
+      setRouletteData(data);
+    });
+
     return () => {
       socket.off("updatePlayerList");
       socket.off("gameStarted");
+      socket.off("rouletteCreated");
     };
   }, [socket, myName]);
+
+  const handleMakeRoulette = () => {
+    socket.emit("makeRoulette", { andGroup, butGroup });
+  };
 
   return (
     <div className="gameroomroulette-container">
@@ -63,8 +77,10 @@ function Gameroomroulette() {
       </div>
       <div className="horizontal-line"></div>
       <div className="gameroulette-body">
-        <p>肯定的:{andGroup.join(", ")}</p>
-        <p>批判的:{butGroup.join(", ")}</p>
+        <button onClick={handleMakeRoulette}>作成</button>
+      </div>
+      <div className="roulette-container">
+        <Roulette data={rouletteData} myName={myName} />
       </div>
     </div>
   );

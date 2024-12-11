@@ -86,7 +86,28 @@ def handle_start_timer(data):
     # Broadcast the timer to all clients
     emit('timerUpdate', {'time': time}, broadcast=True)
 
+@socketio.on('makeRoulette')
+def handle_make_roulette(data):
+    and_group = data.get('andGroup', [])
+    but_group = data.get('butGroup', [])
+    
+    # Create a dictionary with names and roles
+    roulette_dict = {name: '肯定的' for name in and_group}
+    roulette_dict.update({name: '批判的' for name in but_group})
+    
+    # Emit the created dictionary to all clients
+    emit('rouletteCreated', roulette_dict, broadcast=True)
 
+@socketio.on('spinRoulette')
+def handle_spin_roulette(data):
+    prize_number = data.get('prizeNumber')
+    # Broadcast the spin event to all clients
+    emit('spinRoulette', {'prizeNumber': prize_number}, broadcast=True)
+
+@socketio.on('spinResult')
+def handle_spin_result(data):
+    result = data.get('result', 'No result')
+    emit('broadcastSpinResult', {'result': result}, broadcast=True)
 
 
 #Run Server

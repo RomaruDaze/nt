@@ -13,8 +13,10 @@
   "dependencies": {
     "express": "^4.21.2",
     "react": "^18.3.1",
+    "react-custom-roulette": "^1.4.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.0.2",
+    "react-wheel-of-prizes": "^1.1.0",
     "socket.io": "^4.8.1",
     "socket.io-client": "^4.8.1"
   },
