@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useSocket } from "../../SocketContext";
 import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faRedhat } from "@fortawesome/free-brands-svg-icons";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 import "./gameroomball.css";
 
@@ -153,19 +156,69 @@ function GameRoomBall() {
     return role === "Logic" ? "#000000" : "#FFFFFF";
   }
 
+  // Define a function to get the role description
+  function getRoleDescription(role: string | null): string {
+    const descriptions: { [key: string]: string } = {
+      Logic:
+        "個人的な意見や偏見を排し、デザインをありのままに説明し、事実と情報に焦点を当てる",
+      Process: "議論をまとめ、デザインについて決定を下す",
+      Optimism: "デザインの利点とそれがなぜ良い解決策であるかを特定する",
+      Creativity: "デザインを改善するための新しいアイデアを考え出すこと",
+      Danger: "設計のリスクと課題を特定する",
+      Emotion: "デザインがどのような感情をもたらすかを特定する",
+    };
+    return role
+      ? descriptions[role] || "Role description not available."
+      : "No role assigned.";
+  }
+
   return (
     <div className="game-room-ball-container">
       <div className="game-room-ball-header">
-        <p>名前：{myName}</p>
-        <p>役割：{myRole}</p>
-        <h2
-          className="game-room-ball-speaker"
-          style={{ backgroundColor: isButtonDisabled ? "black" : "blue" }}
-        >
-          発言者：{selectedPlayer}
+        <h2>
+          <FontAwesomeIcon icon={faUser} />
+          {" "}
+          {myName}
         </h2>
+        <p
+          style={{
+            backgroundColor: myRole === "Danger" ? "#FFFFFF" : "#000000",
+            color: myRole === "Danger" ? "#000000" : "#FFFFFF",
+            border: myRole === "Danger" ? "2px solid #000000" : "none",
+          }}
+        >
+          <span
+            className="role-icon"
+            style={{
+              color:
+                myRole === "Danger"
+                  ? "#000000"
+                  : myRole === "Creativity"
+                  ? "#00ff47"
+                  : myRole === "Optimism"
+                  ? "#ffdd00"
+                  : myRole === "Process"
+                  ? "#00aaff"
+                  : myRole === "Emotion"
+                  ? "#ff4000"
+                  : myRole === "Logic"
+                  ? "#FFFFFF"
+                  : getRoleColor(myRole || ""),
+            }}
+          >
+            <FontAwesomeIcon icon={faRedhat} />
+          </span>{" "}
+          {myRole}
+        </p>
+        <h4 className="role-desc">{getRoleDescription(myRole)}</h4>
       </div>
       <div className="horizontal-line"></div>
+      <h2
+        className="game-room-ball-speaker"
+        style={{ backgroundColor: isButtonDisabled ? "black" : "blue" }}
+      >
+        発言者：{selectedPlayer}
+      </h2>
       <div className="game-room-ball-player-list">
         {Object.entries(groups).map(([role, players]) =>
           players.map((player, index) => (

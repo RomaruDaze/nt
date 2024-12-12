@@ -10,19 +10,23 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 70px;
+    margin-top: 40px;
 }
 
 .game-room-ball-header p {
-    font-size: 20px;
-    font-weight: bold;
-    margin-top: -10px;
-}
-
-.game-room-ball-header h2 {
     font-size: 30px;
     font-weight: bold;
-    margin-top: -10px;
+    margin: -10px 0;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+.game-room-ball-header span {
+    font-size: 30px;
+}
+
+.role-desc {
+    padding: 0 10px;
 }
 
 .game-room-ball-speaker {
@@ -30,13 +34,16 @@
     color: #ffffff;
     padding: 10px 20px;
     border-radius: 5px;
-    margin-bottom: 0px;
+    font-size: 30px;
+    font-weight: bold;
+    margin-top: 10px 0;
 }
 
 .game-room-ball-player-list {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+
 }
 
 .game-room-ball-player-list button {
