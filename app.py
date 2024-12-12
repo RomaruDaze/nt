@@ -23,8 +23,8 @@ import random
 #     return send_from_directory(app.static_folder, path)
 
 app = Flask(__name__, 
-            static_folder='./dist/assets',
-            template_folder='./dist')     
+            static_folder='build/assets',  # For serving static assets
+            template_folder='build')       # For serving index.html
 CORS(app)
 socketio = SocketIO(app, cors_allowed_origins="*")
 
@@ -32,8 +32,8 @@ socketio = SocketIO(app, cors_allowed_origins="*")
 @app.route('/<path:path>')
 def serve(path):
     try:
-        if path.startswith('static/'):
-            return send_from_directory('dist/assets', path)
+        if path.startswith('assets/'):
+            return send_from_directory('build', path)
         return send_from_directory(app.template_folder, 'index.html')
     except Exception as e:
         print(f"Error serving file: {e}")
