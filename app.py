@@ -120,8 +120,12 @@ def handle_make_roulette(data):
     
     roulette_dict = {name: '肯定的' for name in and_group}
     roulette_dict.update({name: '批判的' for name in but_group})
+
+    items = list(roulette_dict.items())
+    random.shuffle(items)
+    shuffled_dict = dict(items)
     
-    emit('rouletteCreated', roulette_dict, broadcast=True)
+    emit('rouletteCreated', shuffled_dict, broadcast=True)
 
 @socketio.on('spinRoulette')
 def handle_spin_roulette(data):
