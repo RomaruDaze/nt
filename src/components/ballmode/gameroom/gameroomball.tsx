@@ -158,9 +158,7 @@ function GameRoomBall() {
       <div className="game-room-ball-header">
         <h1>ゲームルーム</h1>
         <p>名前：{myName}</p>
-        <p style={{ color: myRole ? getRoleTextColor(myRole) : "#FFFFFF" }}>
-          役割：{myRole}
-        </p>
+        <p>役割：{myRole}</p>
         <h2
           className="game-room-ball-speaker"
           style={{ backgroundColor: isButtonDisabled ? "black" : "blue" }}
@@ -212,12 +210,12 @@ function GameRoomBall() {
 // Helper function to get colors for each role
 function getRoleColor(role: string): string {
   const colors = {
-    logic: "#FFFFFF",
-    process: "#2681ff",
-    optimism: "#efbf04",
-    facts: "#FFFFFF",
-    danger: "#000000",
-    emotion: "#ff473d",
+    Logic: "#FFFFFF",
+    Process: "#2e77ff",
+    Optimism: "#efbf04",
+    Facts: "#FFFFFF",
+    Danger: "#000000",
+    Emotion: "#ff3c2e",
   };
   return colors[role as keyof typeof colors] || "gray";
 }
