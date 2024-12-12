@@ -42,10 +42,9 @@ def serve(path):
 #RESET
 @socketio.on('reset')
 def handle_reset():
-    global connected_players, andgroup, butgroup
+    global groups, connected_players
+    groups = {role: [] for role in groups.keys()}
     connected_players = []
-    andgroup = []
-    butgroup = []
     emit('reset', broadcast=True)
 
 
@@ -67,28 +66,47 @@ def handle_new_player(name):
     if name not in connected_players:
         connected_players.append(name)
     emit('updatePlayerList', connected_players, broadcast=True)
+    emit('updateGroups', groups, broadcast=True)
 
-andgroup = []
-butgroup = []
+groups = {
+    'Logic': [],
+    'Process': [],
+    'Optimism': [],
+    'Facts': [],
+    'Danger': [],
+    'Emotion': []
+}
 
 @socketio.on('startGame')
 def handle_start_game(name):
-    global andgroup, butgroup
-    if name in andgroup or name in butgroup:
-        print(f"{name} is already in a group.")
-    else:
-        if random.choice([True, False]):
-            andgroup.append(name)
-        else:
-            butgroup.append(name)
-
-    print(f"Updated groups: AND: {andgroup}, BUT: {butgroup}")
+    global groups
     
-    emit('gameStarted', {'message': 'Game is starting!', 'andgroup': andgroup, 'butgroup': butgroup}, broadcast=True)
+    # Check if player is already in any group
+    for group_players in groups.values():
+        if name in group_players:
+            return
+
+    # Get available roles (roles with fewer players)
+    available_roles = []
+    min_players = min(len(players) for players in groups.values())
+    for role, players in groups.items():
+        if len(players) <= min_players:
+            available_roles.append(role)
+    
+    # Randomly assign to one of the available roles
+    selected_role = random.choice(available_roles)
+    groups[selected_role].append(name)
+    
+    print(f"Updated groups: {groups}")
+    emit('gameStarted', groups, broadcast=True)
+    emit('updateGroups', groups, broadcast=True)
 
 @socketio.on('requestPlayerList')
 def handle_request_player_list():
-    emit('updatePlayerList', {'andgroup': andgroup, 'butgroup': butgroup}, to=request.sid)
+    if any(groups[role] for role in groups):  # If game has started
+        emit('updateGroups', groups, to=request.sid)
+    else:
+        emit('updatePlayerList', connected_players, to=request.sid)
 
 @socketio.on('playerClicked')
 def handle_player_click(data):

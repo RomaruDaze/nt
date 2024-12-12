@@ -10,8 +10,14 @@ function GameRoomBall() {
   const { myName } = location.state;
   const socket = useSocket();
   const navigate = useNavigate();
-  const [andGroup, setAndGroup] = useState<string[]>([]);
-  const [butGroup, setButGroup] = useState<string[]>([]);
+  const [groups, setGroups] = useState<{ [key: string]: string[] }>({
+    logic: [],
+    process: [],
+    optimism: [],
+    facts: [],
+    danger: [],
+    emotion: [],
+  });
   const [myRole, setMyRole] = useState<string | null>(null);
   const [selectedPlayer, setSelectedPlayer] = useState<string | null>(null);
   const [intercepter, setIntercepter] = useState<string | null>(null);
@@ -19,44 +25,32 @@ function GameRoomBall() {
   const [timer, setTimer] = useState<number>(0);
 
   useEffect(() => {
-    socket.on(
-      "updatePlayerList",
-      (groups: { andgroup: string[]; butgroup: string[] }) => {
-        if (Array.isArray(groups.andgroup) && Array.isArray(groups.butgroup)) {
-          setAndGroup(groups.andgroup);
-          setButGroup(groups.butgroup);
-          if (groups.andgroup.includes(myName)) {
-            setMyRole("肯定的");
-          } else if (groups.butgroup.includes(myName)) {
-            setMyRole("批判的");
-          } else {
-            setMyRole(null);
-          }
-        } else {
-          console.log("Received data is not in the expected format:", groups);
+    socket.on("updateGroups", (updatedGroups: { [key: string]: string[] }) => {
+      setGroups(updatedGroups);
+      // Find player's role
+      for (const [role, players] of Object.entries(updatedGroups)) {
+        if (players.includes(myName)) {
+          setMyRole(role);
+          break;
         }
       }
-    );
+    });
 
-    socket.on(
-      "gameStarted",
-      (data: { andgroup: string[]; butgroup: string[] }) => {
-        setAndGroup(data.andgroup);
-        setButGroup(data.butgroup);
-        if (data.andgroup.includes(myName)) {
-          setMyRole("肯定的");
-        } else if (data.butgroup.includes(myName)) {
-          setMyRole("批判的");
-        } else {
-          setMyRole(null);
+    socket.on("gameStarted", (data: { [key: string]: string[] }) => {
+      setGroups(data);
+      // Find player's role
+      for (const [role, players] of Object.entries(data)) {
+        if (players.includes(myName)) {
+          setMyRole(role);
+          break;
         }
       }
-    );
+    });
 
     socket.emit("requestPlayerList");
 
     return () => {
-      socket.off("updatePlayerList");
+      socket.off("updateGroups");
       socket.off("gameStarted");
     };
   }, [socket, myName]);
@@ -154,12 +148,19 @@ function GameRoomBall() {
     };
   }, []);
 
+  // Add this helper function for text colors
+  function getRoleTextColor(role: string): string {
+    return role === "Logic" ? "#000000" : "#FFFFFF";
+  }
+
   return (
     <div className="game-room-ball-container">
       <div className="game-room-ball-header">
         <h1>ゲームルーム</h1>
         <p>名前：{myName}</p>
-        <p>役割：{myRole}</p>
+        <p style={{ color: myRole ? getRoleTextColor(myRole) : "#FFFFFF" }}>
+          役割：{myRole}
+        </p>
         <h2
           className="game-room-ball-speaker"
           style={{ backgroundColor: isButtonDisabled ? "black" : "blue" }}
@@ -169,26 +170,21 @@ function GameRoomBall() {
       </div>
       <div className="horizontal-line"></div>
       <div className="game-room-ball-player-list">
-        {andGroup.map((player, index) => (
-          <button
-            key={index}
-            style={{ backgroundColor: isButtonDisabled ? "gray" : "green" }}
-            onClick={() => handlePlayerClick(player)}
-            disabled={isButtonDisabled}
-          >
-            {player}
-          </button>
-        ))}
-        {butGroup.map((player, index) => (
-          <button
-            key={index}
-            style={{ backgroundColor: isButtonDisabled ? "gray" : "red" }}
-            onClick={() => handlePlayerClick(player)}
-            disabled={isButtonDisabled}
-          >
-            {player}
-          </button>
-        ))}
+        {Object.entries(groups).map(([role, players]) =>
+          players.map((player, index) => (
+            <button
+              key={`${role}-${index}`}
+              style={{
+                backgroundColor: isButtonDisabled ? "gray" : getRoleColor(role),
+                color: getRoleTextColor(role),
+              }}
+              onClick={() => handlePlayerClick(player)}
+              disabled={isButtonDisabled}
+            >
+              {player}
+            </button>
+          ))
+        )}
       </div>
       <button
         className="intercept"
@@ -211,6 +207,19 @@ function GameRoomBall() {
       </div>
     </div>
   );
+}
+
+// Helper function to get colors for each role
+function getRoleColor(role: string): string {
+  const colors = {
+    logic: "#FFFFFF",
+    process: "#2681ff",
+    optimism: "#efbf04",
+    facts: "#FFFFFF",
+    danger: "#000000",
+    emotion: "#ff473d",
+  };
+  return colors[role as keyof typeof colors] || "gray";
 }
 
 export default GameRoomBall;

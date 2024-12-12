@@ -46,7 +46,7 @@
     margin: 10px;
     color: white;
     background-color: #0078d3;
-    border: none;
+    border: 2px solid rgb(115, 115, 115);
     border-radius: 5px;
     padding: 10px;
     font-size: 24px;
