@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useSocket } from "../SocketContext";
 import ball from "../../assets/ball_icon.png";
 import roulette from "../../assets/wheel_icon.png";
+import logo from "../../assets/logo.png";
 
 function Home() {
   const navigate = useNavigate();
@@ -28,6 +29,7 @@ function Home() {
   return (
     <div className="home-container">
       <div className="home-header">
+        <img src={logo} alt="ナゲTalk" />
         <h1>ナゲTalk</h1>
       </div>
       <div className="home-content">

@@ -1,4 +1,3 @@
-import "./styles/global.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { SocketProvider } from "./components/SocketContext";
 import Home from "./components/home/home";

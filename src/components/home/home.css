@@ -19,6 +19,13 @@
     margin-top: -10px;
 }
 
+.home-header img {
+    width: 150px;
+    height: auto;
+    left: 16%;
+    margin-top: -30px;
+}
+
 .home-content {
     display: flex;
     flex-direction: column;
@@ -48,7 +55,7 @@
     width: 80px;
     height: auto;
     position: absolute;
-    left: 15%;
+    left: 16%;
     margin-top: -30px;
 }
 
@@ -72,7 +79,7 @@
     margin: 10px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 500px) {
     .home-content img {
         left: 10%;
     }

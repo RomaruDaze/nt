@@ -8,6 +8,7 @@
 .waitroulette-header {
     font-size: 24px;
     font-weight: bold;
+    margin-top: 30px;
 }
 
 .waitroulette-content {
@@ -77,13 +78,6 @@
 .back-button:active {
     background-color: #000;
     color: #fff;
-}
-
-.horizontal-line {
-    width: 100%;
-    height: 2px;
-    background-color: #000;
-    margin: 10px 0;
 }
 
 .waitroulette-player-list {

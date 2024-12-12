@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useSocket } from "../../SocketContext";
 import { useEffect, useState } from "react";
 import Roulette from "./roulette";
@@ -7,6 +7,7 @@ import "./gameroomroulette.css";
 function Gameroomroulette() {
   const socket = useSocket();
   const location = useLocation();
+  const navigate = useNavigate();
   const { myName } = location.state;
   const [andGroup, setAndGroup] = useState<string[]>([]);
   const [butGroup, setButGroup] = useState<string[]>([]);
@@ -81,6 +82,9 @@ function Gameroomroulette() {
       <div className="roulette-container">
         <Roulette data={rouletteData} myName={myName} />
       </div>
+      <button className="back-button" onClick={() => navigate("/")}>
+        戻る
+      </button>
     </div>
   );
 }
