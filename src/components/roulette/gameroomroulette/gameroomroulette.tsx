@@ -9,69 +9,66 @@ function Gameroomroulette() {
   const location = useLocation();
   const navigate = useNavigate();
   const { myName } = location.state;
-  const [andGroup, setAndGroup] = useState<string[]>([]);
-  const [butGroup, setButGroup] = useState<string[]>([]);
-  const [myRole, setMyRole] = useState<string | null>(null);
+  const [groups, setGroups] = useState<{ [key: string]: string[] }>({
+    Logic: [],
+    Process: [],
+    Optimism: [],
+    Facts: [],
+    Danger: [],
+    Emotion: [],
+  });
   const [rouletteData, setRouletteData] = useState<{ [key: string]: string }>(
     {}
   );
+  const [myRole, setMyRole] = useState<string | null>(null);
 
   useEffect(() => {
-    socket.on(
-      "updatePlayerList",
-      (groups: { andgroup: string[]; butgroup: string[] }) => {
-        if (Array.isArray(groups.andgroup) && Array.isArray(groups.butgroup)) {
-          setAndGroup(groups.andgroup);
-          setButGroup(groups.butgroup);
-          if (groups.andgroup.includes(myName)) {
-            setMyRole("肯定的");
-          } else if (groups.butgroup.includes(myName)) {
-            setMyRole("批判的");
-          } else {
-            setMyRole(null);
-          }
-        } else {
-          console.log("Received data is not in the expected format:", groups);
+    socket.on("updateGroups", (groupData: { [key: string]: string[] }) => {
+      setGroups(groupData);
+      // Find which group the player belongs to
+      for (const [role, players] of Object.entries(groupData)) {
+        if (players.includes(myName)) {
+          setMyRole(role);
+          break;
         }
       }
-    );
+    });
 
-    socket.on(
-      "gameStarted",
-      (data: { andgroup: string[]; butgroup: string[] }) => {
-        setAndGroup(data.andgroup);
-        setButGroup(data.butgroup);
-        if (data.andgroup.includes(myName)) {
-          setMyRole("肯定的");
-        } else if (data.butgroup.includes(myName)) {
-          setMyRole("批判的");
-        } else {
-          setMyRole(null);
+    socket.on("gameStarted", (groupData: { [key: string]: string[] }) => {
+      setGroups(groupData);
+      // Find which group the player belongs to
+      for (const [role, players] of Object.entries(groupData)) {
+        if (players.includes(myName)) {
+          setMyRole(role);
+          break;
         }
       }
-    );
+    });
 
     socket.emit("requestPlayerList");
+    socket.emit("requestRouletteState");
 
     socket.on("rouletteCreated", (data: { [key: string]: string }) => {
       setRouletteData(data);
+      if (data[myName]) {
+        setMyRole(data[myName]);
+      }
     });
 
     return () => {
-      socket.off("updatePlayerList");
+      socket.off("updateGroups");
       socket.off("gameStarted");
       socket.off("rouletteCreated");
     };
   }, [socket, myName]);
 
   const handleMakeRoulette = () => {
-    socket.emit("makeRoulette", { andGroup, butGroup });
+    socket.emit("makeRoulette", groups);
   };
 
   return (
     <div className="gameroomroulette-container">
       <div className="gameroulette-header">
-        <h1>ゲームルーレット</h1>
         <p>名前:{myName}</p>
         <p>役割:{myRole}</p>
       </div>
@@ -82,7 +79,7 @@ function Gameroomroulette() {
       <div className="roulette-container">
         <Roulette data={rouletteData} myName={myName} />
       </div>
-      <button className="back-button" onClick={() => navigate("/")}>
+      <button className="back-button" onClick={() => navigate("/waitroulette")}>
         戻る
       </button>
     </div>

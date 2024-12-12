@@ -69,12 +69,12 @@ def handle_new_player(name):
     emit('updateGroups', groups, broadcast=True)
 
 groups = {
-    'Logic': [],
-    'Process': [],
-    'Optimism': [],
-    'Facts': [],
-    'Danger': [],
-    'Emotion': []
+    'Logic': [],    # White Hat
+    'Process': [],  # Blue Hat
+    'Optimism': [], # Yellow Hat
+    'Creativity': [],    # White Hat
+    'Danger': [],   # Black Hat
+    'Emotion': []   # Red Hat
 }
 
 @socketio.on('startGame')
@@ -131,19 +131,56 @@ def handle_start_timer(data):
 
 
 #Roulette Logic
-@socketio.on('makeRoulette')
-def handle_make_roulette(data):
-    and_group = data.get('andGroup', [])
-    but_group = data.get('butGroup', [])
-    
-    roulette_dict = {name: '肯定的' for name in and_group}
-    roulette_dict.update({name: '批判的' for name in but_group})
+current_roulette_state = {}
 
+@socketio.on('makeRoulette')
+def handle_make_roulette(groups_data):
+    global current_roulette_state
+    roulette_dict = {}
+    for role, players in groups_data.items():
+        for player in players:
+            roulette_dict[player] = role
+    
     items = list(roulette_dict.items())
     random.shuffle(items)
     shuffled_dict = dict(items)
     
+    current_roulette_state = shuffled_dict  # Store the current state
     emit('rouletteCreated', shuffled_dict, broadcast=True)
+
+# Add a new event handler for requesting roulette state
+@socketio.on('requestRouletteState')
+def handle_request_roulette_state():
+    if current_roulette_state:
+        emit('rouletteCreated', current_roulette_state, to=request.sid)
+
+@socketio.on('startGame')
+def handle_start_game(name):
+    global groups, current_roulette_state
+    
+    # Check if roulette is already created
+    if current_roulette_state and name in current_roulette_state:
+        role = current_roulette_state[name]
+        if name not in groups[role]:
+            groups[role].append(name)
+    else:
+        # Original role assignment logic
+        for group_players in groups.values():
+            if name in group_players:
+                return
+
+        available_roles = []
+        min_players = min(len(players) for players in groups.values())
+        for role, players in groups.items():
+            if len(players) <= min_players:
+                available_roles.append(role)
+        
+        selected_role = random.choice(available_roles)
+        groups[selected_role].append(name)
+    
+    print(f"Updated groups: {groups}")
+    emit('gameStarted', groups, broadcast=True)
+    emit('updateGroups', groups, broadcast=True)
 
 @socketio.on('spinRoulette')
 def handle_spin_roulette(data):

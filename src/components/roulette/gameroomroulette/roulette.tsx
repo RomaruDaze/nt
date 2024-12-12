@@ -5,7 +5,10 @@ import "./gameroomroulette.css";
 
 interface Prize {
   option: string;
-  style: { backgroundColor: string };
+  style: {
+    backgroundColor: string;
+    textColor: string;
+  };
 }
 
 interface RouletteProps {
@@ -19,9 +22,29 @@ const Roulette: React.FC<RouletteProps> = ({ data, myName }) => {
   const [prizeNumber, setPrizeNumber] = useState<number>(0);
   const [spinResult, setSpinResult] = useState<string>("");
 
+  const getColorForRole = (role: string): string => {
+    const colors = {
+      Logic: "#FFFFFF",
+      Process: "#2e77ff",
+      Optimism: "#efbf04",
+      Creativity: "#2e6f40",
+      Danger: "#000000",
+      Emotion: "#ff3c2e",
+    };
+    return colors[role as keyof typeof colors] || "#CCCCCC";
+  };
+
+  const getTextColorForRole = (role: string): string => {
+    // Return black for Logic role, white for others
+    return role === "Logic" ? "#000000" : "#ffffff";
+  };
+
   const wheelData: Prize[] = Object.entries(data).map(([name, role]) => ({
     option: `${name}`,
-    style: { backgroundColor: role === "批判的" ? "#C40C15" : "#24CA69" },
+    style: {
+      backgroundColor: getColorForRole(role),
+      textColor: getTextColorForRole(role), // Add this property
+    },
   }));
 
   const handleSpinClick = () => {
@@ -79,7 +102,7 @@ const Roulette: React.FC<RouletteProps> = ({ data, myName }) => {
           radiusLineColor={"#0f0f0f"}
           radiusLineWidth={1}
           fontSize={20}
-          textColors={["#ffffff"]}
+          textColors={wheelData.map((item) => item.style.textColor)} // Use dynamic text colors
           onStopSpinning={() => {
             setMustSpin(false);
           }}

@@ -2,18 +2,15 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    z-index: 50;
+    margin-bottom: 100px;
 }
 
 .game-room-ball-header {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 30px;
-}
-
-.game-room-ball-header h1 {
-    font-size: 40px;
-    font-weight: bold;
+    margin-top: 70px;
 }
 
 .game-room-ball-header p {
@@ -33,7 +30,7 @@
     color: #ffffff;
     padding: 10px 20px;
     border-radius: 5px;
-
+    margin-bottom: 0px;
 }
 
 .game-room-ball-player-list {
@@ -43,13 +40,13 @@
 }
 
 .game-room-ball-player-list button {
-    margin: 10px;
+    margin: 5px;
     color: white;
     background-color: #0078d3;
     border: 2px solid rgb(115, 115, 115);
     border-radius: 5px;
     padding: 10px;
-    font-size: 24px;
+    font-size: 20px;
 }
 
 .intercept {
@@ -61,7 +58,7 @@
     font-size: 50px;
     font-weight: bold;
     margin: 10px;
-    position: absolute;
+    position: fixed;
     bottom: 10px;
     right: 0;
     left: 0;

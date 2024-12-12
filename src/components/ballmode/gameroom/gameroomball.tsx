@@ -156,7 +156,6 @@ function GameRoomBall() {
   return (
     <div className="game-room-ball-container">
       <div className="game-room-ball-header">
-        <h1>ゲームルーム</h1>
         <p>名前：{myName}</p>
         <p>役割：{myRole}</p>
         <h2
@@ -192,14 +191,14 @@ function GameRoomBall() {
       >
         ちょい待って!?
       </button>
-      <button className="back-button" onClick={() => navigate("/")}>
+      <button className="back-button" onClick={() => navigate("/waitball")}>
         戻る
       </button>
       <div
         className="intercept-block"
         style={{ display: isIntercepted ? "block" : "none" }}
       >
-        <h1>発散者</h1>
+        <h1>ちょい待って！</h1>
         <h2>🗣️ {intercepter}</h2>
         <p>⏰ {timer}</p>
       </div>
@@ -207,13 +206,12 @@ function GameRoomBall() {
   );
 }
 
-// Helper function to get colors for each role
 function getRoleColor(role: string): string {
   const colors = {
     Logic: "#FFFFFF",
     Process: "#2e77ff",
     Optimism: "#efbf04",
-    Facts: "#FFFFFF",
+    Creativity: "#2e6f40",
     Danger: "#000000",
     Emotion: "#ff3c2e",
   };
