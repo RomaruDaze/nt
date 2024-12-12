@@ -28,17 +28,17 @@ socketio = SocketIO(app, cors_allowed_origins="*")
 
 @app.route('/')
 def index():
-    return send_from_directory('dist', 'index.html')
+    return send_from_directory('./dist', 'index.html')
 
 @app.errorhandler(404)
 def not_found(e):
-    return send_from_directory('dist', 'index.html')
+    return send_from_directory('./dist', 'index.html')
 
 @app.route('/<path:path>')
 def static_proxy(path):
-    if os.path.exists(os.path.join('dist', path)):
-        return send_from_directory('dist', path)
-    return send_from_directory('dist', 'index.html')
+    if os.path.exists(os.path.join('./dist', path)):
+        return send_from_directory('./dist', path)
+    return send_from_directory('./dist', 'index.html')
 
 #RESET
 @socketio.on('reset')
