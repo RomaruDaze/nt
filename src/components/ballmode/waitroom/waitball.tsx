@@ -45,21 +45,21 @@ function WaitBall() {
     <div className="waitball-container">
       <div className="waitball-header">
         <h1>ホール投げ</h1>
-      </div>
-      <div className="waitball-content">
-        <input
-          type="text"
-          placeholder="名前入力"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <button className="join-button" onClick={handleJoin}>
-          参加
+        <div className="waitball-content">
+          <input
+            type="text"
+            placeholder="名前入力"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <button className="join-button" onClick={handleJoin}>
+            参加
+          </button>
+        </div>
+        <button className="back-button" onClick={() => navigate("/")}>
+          戻る
         </button>
       </div>
-      <button className="back-button" onClick={() => navigate("/")}>
-        戻る
-      </button>
       <div className="horizontal-line"></div>
       <div className="waitball-player-list">
         <h2>参加者</h2>
@@ -68,7 +68,7 @@ function WaitBall() {
             {players.map((player, index) => (
               <li
                 key={index}
-                style={{ color: player === myName ? "green" : "black" }}
+                style={{ color: player === myName ? "gold" : "white" }}
               >
                 {player}
                 {player === myName && (

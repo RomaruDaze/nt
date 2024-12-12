@@ -6,9 +6,17 @@
 }
 
 .waitroulette-header {
-    font-size: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: 30px;
+    width: 100%;
+}
+
+.waitroulette-header h1 {
+    font-size: 50px;
     font-weight: bold;
-    margin-top: 30px;
 }
 
 .waitroulette-content {
@@ -46,11 +54,6 @@
     padding: 10px 20px;
 }
 
-.waitroulette-content button:hover {
-    background-color: #000;
-    color: #fff;
-}
-
 .waitroulette-content button:active {
     background-color: #000;
     color: #fff;
@@ -86,23 +89,34 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin-top: -20px;
 }
 
 .waitroulette-player-list-item {
     font-size: 20px;
     font-weight: bold;
+    margin-top: -20px;
 }
 
 .waitroulette-player-list-item ul {
     padding: 0;
     text-align: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 .waitroulette-player-list-item li {
-    padding: 10px 20px;
+    padding: 10px 10px;
     border-radius: 5px;
-    margin: 10px 0;
     list-style-type: none;
+    margin: 5px;
+    background-color: #000000;
+    color: #fff;
+    border-radius: 10px;
+    font-size: 17px;
 }
 
 .green {

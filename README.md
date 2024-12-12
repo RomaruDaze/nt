@@ -1,50 +1,67 @@
-# React + TypeScript + Vite
+# NageTalk
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A web-based chat application with interactive games and features.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Real-time chat functionality
+- Interactive games:
+  - Ball game
+  - Roulette game
+- Custom 404 page with space theme animation
+- Responsive design for mobile and desktop
 
-## Expanding the ESLint configuration
+## Technologies Used
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- HTML5
+- CSS3
+- JavaScript
+- React (Frontend)
+- Custom animations and transitions
 
-- Configure the top-level `parserOptions` property like this:
+## Project Structure
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```
+build/
+├── 404.html # Custom 404 page with space animation
+├── index.html # Main application entry point
+└── assets/
+├── index-JS_DQmQG.js # Bundled JavaScript
+├── index-C3hpNZTH.css # Bundled CSS
+└── logo-lYzHHdZP.png # Application logo
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## Installation
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+1. Clone the repository
+2. Navigate to the project directory
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
+4. Build the frontend:
+   ```bash
+   npm run build
+   ```
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+## Features Highlight
+
+### Custom 404 Page
+- Animated astronaut floating in space
+- Falling star animation
+- Automatic redirect to home page after 2 seconds
+- Responsive design
+
+### Game Rooms
+- Ball game with interception mechanics
+- Roulette game with spinning wheel
+- Player list management
+- Real-time game state updates
+
+## Contributing
+
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)

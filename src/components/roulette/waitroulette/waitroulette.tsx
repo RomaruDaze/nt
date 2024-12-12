@@ -45,21 +45,21 @@ function WaitRoulette() {
     <div className="waitroulette-container">
       <div className="waitroulette-header">
         <h1>ルーレット</h1>
-      </div>
-      <div className="waitroulette-content">
-        <input
-          type="text"
-          placeholder="名前入力"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <button className="join-button" onClick={handleJoin}>
-          参加
+        <div className="waitroulette-content">
+          <input
+            type="text"
+            placeholder="名前入力"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <button className="join-button" onClick={handleJoin}>
+            参加
+          </button>
+        </div>
+        <button className="back-button" onClick={() => navigate("/")}>
+          戻る
         </button>
       </div>
-      <button className="back-button" onClick={() => navigate("/")}>
-        戻る
-      </button>
       <div className="horizontal-line"></div>
       <div className="waitroulette-player-list">
         <h2>参加者</h2>
@@ -68,7 +68,7 @@ function WaitRoulette() {
             {players.map((player, index) => (
               <li
                 key={index}
-                style={{ color: player === myName ? "green" : "black" }}
+                style={{ color: player === myName ? "gold" : "white" }}
               >
                 {player}
                 {player === myName && (
