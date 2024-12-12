@@ -5,9 +5,13 @@ import time
 import os
 import random
 
+# app = Flask(__name__, static_folder='dist', static_url_path='')
+# CORS(app, resources={r"/*": {"origins": "http://192.168.182.140:5000"}})
+# socketio = SocketIO(app)
+
 app = Flask(__name__, static_folder='dist', static_url_path='')
-CORS(app, resources={r"/*": {"origins": "http://192.168.182.140:5000"}})
-socketio = SocketIO(app)
+CORS(app)
+socketio = SocketIO(app, cors_allowed_origins="*")
 
 
 #Socket to Index.html
