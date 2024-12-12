@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useSocket } from "../../SocketContext";
 import { useNavigate } from "react-router-dom";
+
 import "./gameroomball.css";
 
 function GameRoomBall() {
@@ -159,12 +160,12 @@ function GameRoomBall() {
         <h1>ゲームルーム</h1>
         <p>名前：{myName}</p>
         <p>役割：{myRole}</p>
-        <p
+        <h2
           className="game-room-ball-speaker"
           style={{ backgroundColor: isButtonDisabled ? "black" : "blue" }}
         >
           発言者：{selectedPlayer}
-        </p>
+        </h2>
       </div>
       <div className="horizontal-line"></div>
       <div className="game-room-ball-player-list">
@@ -195,7 +196,7 @@ function GameRoomBall() {
         disabled={isInterceptButtonDisabled}
         style={{ backgroundColor: isInterceptButtonDisabled ? "gray" : "red" }}
       >
-        発散
+        ちょい待って!?
       </button>
       <button className="back-button" onClick={() => navigate("/")}>
         戻る
@@ -204,9 +205,9 @@ function GameRoomBall() {
         className="intercept-block"
         style={{ display: isIntercepted ? "block" : "none" }}
       >
-        <p>発散者</p>
-        <h1>{intercepter}</h1>
-        <p>{timer}</p>
+        <h1>発散者</h1>
+        <h2>🗣️ {intercepter}</h2>
+        <p>⏰ {timer}</p>
       </div>
     </div>
   );

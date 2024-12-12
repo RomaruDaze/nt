@@ -53,7 +53,6 @@ function Gameroomroulette() {
     socket.emit("requestPlayerList");
 
     socket.on("rouletteCreated", (data: { [key: string]: string }) => {
-      console.log("Received roulette data:", data);
       setRouletteData(data);
     });
 
@@ -75,10 +74,10 @@ function Gameroomroulette() {
         <p>名前:{myName}</p>
         <p>役割:{myRole}</p>
       </div>
+      <button className="gameroulette-body" onClick={handleMakeRoulette}>
+        作成
+      </button>
       <div className="horizontal-line"></div>
-      <div className="gameroulette-body">
-        <button onClick={handleMakeRoulette}>作成</button>
-      </div>
       <div className="roulette-container">
         <Roulette data={rouletteData} myName={myName} />
       </div>

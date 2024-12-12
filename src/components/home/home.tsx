@@ -2,6 +2,8 @@ import "./home.css";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useSocket } from "../SocketContext";
+import ball from "../../assets/ball_icon.png";
+import roulette from "../../assets/wheel_icon.png";
 
 function Home() {
   const navigate = useNavigate();
@@ -17,6 +19,12 @@ function Home() {
     };
   }, [socket]);
 
+  const handleReset = () => {
+    if (window.confirm("データをRESETしますか?")) {
+      socket.emit("reset");
+    }
+  };
+
   return (
     <div className="home-container">
       <div className="home-header">
@@ -24,7 +32,14 @@ function Home() {
       </div>
       <div className="home-content">
         <button onClick={() => navigate("/waitball")}>ホール投げ</button>
+        <img src={ball} alt="ホール投げ" />
+      </div>
+      <div className="home-content">
         <button onClick={() => navigate("/waitroulette")}>ルーレット</button>
+        <img src={roulette} alt="ルーレット" />
+      </div>
+      <div className="home-footer">
+        <button onClick={() => handleReset()}>RESET</button>
       </div>
     </div>
   );

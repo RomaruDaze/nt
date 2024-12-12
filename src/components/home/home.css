@@ -3,11 +3,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    position: absolute;
+    height: 80vh;
 }
 
 .home-header {
@@ -15,11 +11,6 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-}
-
-.home-header img {
-    width: 100px;
-    height: auto;
 }
 
 .home-header h1 {
@@ -33,17 +24,56 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    width: 100%;
 }
 
 .home-content button {
-    width: 200px;
-    height: 50px;
-    font-size: 20px;
+    width: 60%;
+    font-size: 30px;
     font-weight: bold;
-    margin: 10px;
+    margin: 20px 0;
+    padding: 10px 0;
+    border: none;
+    border-radius: 10px;
+    background-color: #0059ff;
+    color: #fff;
 }
 
 .home-content button:hover {
     background-color: #000;
     color: #fff;
+}
+
+.home-content img {
+    width: 80px;
+    height: auto;
+    position: absolute;
+    left: 15%;
+    margin-top: -30px;
+}
+
+.home-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    bottom: 0;
+    position: absolute;
+}
+
+.home-footer button {
+    width: 200px;
+    height: 50px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    font-size: 20px;
+    font-weight: bold;
+    margin: 10px;
+}
+
+@media (max-width: 768px) {
+    .home-content img {
+        left: 10%;
+    }
 }

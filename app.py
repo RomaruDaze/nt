@@ -6,7 +6,7 @@ import os
 import random
 
 app = Flask(__name__, static_folder='dist', static_url_path='')
-CORS(app, resources={r"/*": {"origins": "http://192.168.179.22:5000"}})
+CORS(app, resources={r"/*": {"origins": "http://192.168.182.140:5000"}})
 socketio = SocketIO(app)
 
 
@@ -23,6 +23,15 @@ def not_found(e):
 def static_proxy(path):
     return send_from_directory(app.static_folder, path)
 
+#RESET
+@socketio.on('reset')
+def handle_reset():
+    global connected_players, andgroup, butgroup
+    connected_players = []
+    andgroup = []
+    butgroup = []
+    emit('reset', broadcast=True)
+
 
 #Effect
 connected_players = []
@@ -35,6 +44,8 @@ def handle_connect():
 def handle_disconnect():
     print(time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time())) + ' Client disconnected')
 
+
+#Ball Logic
 @socketio.on('newPlayer')
 def handle_new_player(name):
     if name not in connected_players:
@@ -47,11 +58,13 @@ butgroup = []
 @socketio.on('startGame')
 def handle_start_game(name):
     global andgroup, butgroup
-    if random.choice([True, False]):
-        andgroup.append(name)
+    if name in andgroup or name in butgroup:
+        print(f"{name} is already in a group.")
     else:
-        butgroup.append(name)
-
+        if random.choice([True, False]):
+            andgroup.append(name)
+        else:
+            butgroup.append(name)
 
     print(f"Updated groups: AND: {andgroup}, BUT: {butgroup}")
     
@@ -81,6 +94,9 @@ def handle_start_timer(data):
     time = data['time']
     emit('timerUpdate', {'time': time}, broadcast=True)
 
+
+
+#Roulette Logic
 @socketio.on('makeRoulette')
 def handle_make_roulette(data):
     and_group = data.get('andGroup', [])

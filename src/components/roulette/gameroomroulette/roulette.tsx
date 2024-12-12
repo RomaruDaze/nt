@@ -21,7 +21,7 @@ const Roulette: React.FC<RouletteProps> = ({ data, myName }) => {
 
   const wheelData: Prize[] = Object.entries(data).map(([name, role]) => ({
     option: `${name}`,
-    style: { backgroundColor: role === "批判的" ? "#F22B35" : "#24CA69" },
+    style: { backgroundColor: role === "批判的" ? "#C40C15" : "#24CA69" },
   }));
 
   const handleSpinClick = () => {
@@ -64,27 +64,29 @@ const Roulette: React.FC<RouletteProps> = ({ data, myName }) => {
       <div className="roulette-result">
         <h1>発言者：{spinResult}</h1>
       </div>
-      <Wheel
-        mustStartSpinning={mustSpin}
-        prizeNumber={prizeNumber}
-        data={
-          wheelData.length > 0
-            ? wheelData
-            : [{ option: "No Data", style: { backgroundColor: "#dedede" } }]
-        }
-        outerBorderColor={"#000"}
-        outerBorderWidth={10}
-        innerBorderColor={"#000"}
-        radiusLineColor={"#0f0f0f"}
-        radiusLineWidth={1}
-        fontSize={20}
-        textColors={["#ffffff"]}
-        onStopSpinning={() => {
-          setMustSpin(false);
-        }}
-      />
-      <div className="roulette-button-container">
-        <button onClick={handleSpinClick}>SPIN</button>
+      <div className="roulette-wheel">
+        <Wheel
+          mustStartSpinning={mustSpin}
+          prizeNumber={prizeNumber}
+          data={
+            wheelData.length > 0
+              ? wheelData
+              : [{ option: "No Data", style: { backgroundColor: "#dedede" } }]
+          }
+          outerBorderColor={"#000"}
+          outerBorderWidth={10}
+          innerBorderColor={"#000"}
+          radiusLineColor={"#0f0f0f"}
+          radiusLineWidth={1}
+          fontSize={20}
+          textColors={["#ffffff"]}
+          onStopSpinning={() => {
+            setMustSpin(false);
+          }}
+        />
+        <div className="roulette-button-container">
+          <button onClick={handleSpinClick}>スピン</button>
+        </div>
       </div>
     </>
   );

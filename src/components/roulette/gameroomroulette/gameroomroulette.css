@@ -22,15 +22,11 @@
 }
 
 .gameroulette-body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.gameroulette-body button {
     margin-top: 10px;
-    background-color: #006bc2;
+    background-color: #0077d9;
     color: #fff;
+    border: none;
+    width: 80%;
     padding: 10px 20px;
     font-size: 24px;
     border-radius: 5px;
@@ -42,18 +38,25 @@
     align-items: center;
 }
 
-.roulette-button-container {
+.roulette-wheel {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+}
+
+.roulette-button-container {
+    position: absolute;
+    z-index: 100;
 }
 
 .roulette-button-container button {
-    margin-top: 10px;
     background-color: #fff700;
     color: #000;
-    padding: 10px 20px;
+    padding: 20px 5px;
+    border-radius: 50px;
     font-size: 24px;
     font-weight: bold;
-    border-radius: 5px;
+    width: 100%;
+    height: 100%;
 }

@@ -21,11 +21,18 @@
     margin-top: -10px;
 }
 
+.game-room-ball-header h2 {
+    font-size: 30px;
+    font-weight: bold;
+    margin-top: -10px;
+}
+
 .game-room-ball-speaker {
     background-color: #000000;
     color: #ffffff;
     padding: 10px 20px;
     border-radius: 5px;
+
 }
 
 .game-room-ball-player-list {
@@ -50,13 +57,14 @@
     padding: 10px 20px;
     border-radius: 5px;
     border: none;
-    font-size: 20px;
+    font-size: 50px;
     font-weight: bold;
     margin: 10px;
     position: absolute;
     bottom: 10px;
     right: 0;
     left: 0;
+    margin: 0 10%;
 }
 
 .intercept-block {
@@ -72,13 +80,27 @@
     opacity: 0.9;
 }
 
-.intercept-block p {
-    margin-top: 50%;
-    font-size: 30px;
+
+.intercept-block h1 {
+    margin-top: 20%;
+    font-size: 40px;
     font-weight: bold;
 }
 
-.intercept-block h1 {
-    font-size: 40px;
+.intercept-block h2 {
+    margin-top: 10%;
+    font-size: 50px;
     font-weight: bold;
+}
+
+.intercept-block p {
+    margin-top: 10%;
+    font-size: 50px;
+    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    .intercept {
+        font-size: 40px;
+    }
 }
