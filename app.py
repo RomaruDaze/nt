@@ -9,7 +9,7 @@ import random
 # CORS(app, resources={r"/*": {"origins": "http://192.168.182.140:5000"}})
 # socketio = SocketIO(app)
 
-app = Flask(__name__, static_folder='dist', static_url_path='')
+app = Flask(__name__, static_folder='./dist', template_folder='./dist')
 CORS(app)
 socketio = SocketIO(app, cors_allowed_origins="*")
 
@@ -28,17 +28,17 @@ socketio = SocketIO(app, cors_allowed_origins="*")
 
 @app.route('/')
 def index():
-    return send_from_directory('./dist', 'index.html')
+    return send_from_directory(app.template_folder, 'index.html')
 
 @app.errorhandler(404)
 def not_found(e):
-    return send_from_directory('./dist', 'index.html')
+    return send_from_directory(app.template_folder, 'index.html')
 
 @app.route('/<path:path>')
 def static_proxy(path):
-    if os.path.exists(os.path.join('./dist', path)):
-        return send_from_directory('./dist', path)
-    return send_from_directory('./dist', 'index.html')
+    if os.path.exists(os.path.join(app.template_folder, path)):
+        return send_from_directory(app.template_folder, path)
+    return send_from_directory(app.template_folder, 'index.html')
 
 #RESET
 @socketio.on('reset')
