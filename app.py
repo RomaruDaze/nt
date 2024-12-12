@@ -9,10 +9,6 @@ import random
 # CORS(app, resources={r"/*": {"origins": "http://192.168.182.140:5000"}})
 # socketio = SocketIO(app)
 
-app = Flask(__name__, static_folder='./dist', template_folder='./dist')
-CORS(app)
-socketio = SocketIO(app, cors_allowed_origins="*")
-
 #Socket to Index.html
 # @app.route('/')
 # def index():
@@ -26,19 +22,22 @@ socketio = SocketIO(app, cors_allowed_origins="*")
 # def static_proxy(path):
 #     return send_from_directory(app.static_folder, path)
 
-@app.route('/')
-def index():
-    return send_from_directory(app.template_folder, 'index.html')
+app = Flask(__name__, 
+            static_folder='./dist/assets',
+            template_folder='./dist')     
+CORS(app)
+socketio = SocketIO(app, cors_allowed_origins="*")
 
-@app.errorhandler(404)
-def not_found(e):
-    return send_from_directory(app.template_folder, 'index.html')
-
+@app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
-def static_proxy(path):
-    if os.path.exists(os.path.join(app.template_folder, path)):
-        return send_from_directory(app.template_folder, path)
-    return send_from_directory(app.template_folder, 'index.html')
+def serve(path):
+    try:
+        if path.startswith('static/'):
+            return send_from_directory('dist/assets', path)
+        return send_from_directory(app.template_folder, 'index.html')
+    except Exception as e:
+        print(f"Error serving file: {e}")
+        return "Error: Make sure to build the frontend first and place it in the 'build' directory"
 
 #RESET
 @socketio.on('reset')
