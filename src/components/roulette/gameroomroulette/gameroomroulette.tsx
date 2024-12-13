@@ -121,7 +121,7 @@ function Gameroomroulette() {
           </span>{" "}
           {myRole}
         </p>
-        <h4 className="role-desc">{getRoleDescription(myRole)}</h4>
+        <h4 className="role-desc">役割:{getRoleDescription(myRole)}</h4>
       </div>
       <button className="gameroulette-body" onClick={handleMakeRoulette}>
         作成
