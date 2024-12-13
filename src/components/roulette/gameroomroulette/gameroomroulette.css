@@ -25,6 +25,7 @@
 
 .role-desc {
     padding: 0 10px;
+    font-size: 20px;
 }
 
 .gameroulette-body {
@@ -49,7 +50,6 @@
     font-weight: bold;
     margin-top: 10px 0;
 }
-
 
 .roulette-wheel {
     display: flex;
