@@ -24,12 +24,18 @@
 }
 
 .role-desc {
+    margin: 20px 0;
     padding: 0 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.role-desc h3 {
+    margin: 0;
     font-size: 20px;
 }
 
 .gameroulette-body {
-    margin-top: 10px;
     background-color: #0077d9;
     color: #fff;
     border: none;
@@ -37,6 +43,7 @@
     padding: 10px 20px;
     font-size: 24px;
     border-radius: 5px;
+    margin-bottom: 10px;
 }
 
 .roulette-container {
@@ -46,9 +53,9 @@
 }
 
 .roulette-result {
-    font-size: 30px;
+    font-size: 20px;
     font-weight: bold;
-    margin-top: 10px 0;
+    margin: -20px 0;
 }
 
 .roulette-wheel {

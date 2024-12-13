@@ -26,9 +26,18 @@
 }
 
 .role-desc {
+    margin: 20px 0;
     padding: 0 10px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.role-desc h3 {
+    margin: 0;
     font-size: 20px;
 }
+
 
 .game-room-ball-speaker {
     background-color: #000000;

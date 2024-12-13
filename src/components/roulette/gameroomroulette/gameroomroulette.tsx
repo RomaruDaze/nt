@@ -71,13 +71,12 @@ function Gameroomroulette() {
   // Define a function to get the role description
   function getRoleDescription(role: string | null): string {
     const descriptions: { [key: string]: string } = {
-      Logic:
-        "役割:個人的な意見や偏見を排し、デザインをありのままに説明し、事実と情報に焦点を当てる",
-      Process: "役割:議論をまとめ、デザインについて決定を下す",
-      Optimism: "役割:デザインの利点とそれがなぜ良い解決策であるかを特定する",
-      Creativity: "役割:デザインを改善するための新しいアイデアを考え出すこと",
-      Danger: "役割:設計のリスクと課題を特定する",
-      Emotion: "役割:デザインがどのような感情をもたらすかを特定する",
+      Logic: "事実を話す役割",
+      Process: "議論のまとめる役割",
+      Optimism: "利点を特定する役割",
+      Creativity: "新しいアイデアを考え出す役割",
+      Danger: "リスクと課題を特定する役割",
+      Emotion: "感情を話す役割",
     };
     return role
       ? descriptions[role] || "Role description not available."
@@ -88,8 +87,7 @@ function Gameroomroulette() {
     <div className="gameroomroulette-container">
       <div className="gameroulette-header">
         <h2>
-          <FontAwesomeIcon icon={faUser} />{" "}
-          {myName}
+          <FontAwesomeIcon icon={faUser} /> {myName}
         </h2>
         <p
           style={{
@@ -121,7 +119,9 @@ function Gameroomroulette() {
           </span>{" "}
           {myRole}
         </p>
-        <h4 className="role-desc">{getRoleDescription(myRole)}</h4>
+        <div className="role-desc">
+          <h3>役割 : {getRoleDescription(myRole)}</h3>
+        </div>
       </div>
       <button className="gameroulette-body" onClick={handleMakeRoulette}>
         作成
