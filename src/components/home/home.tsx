@@ -33,8 +33,8 @@ function Home() {
         <h1>ナゲTalk</h1>
       </div>
       <div className="home-content">
-        <button onClick={() => navigate("/waitball")}>ホール投げ</button>
-        <img src={ball} alt="ホール投げ" />
+        <button onClick={() => navigate("/waitball")}>ボール投げ</button>
+        <img src={ball} alt="ボール投げ" />
       </div>
       <div className="home-content">
         <button onClick={() => navigate("/waitroulette")}>ルーレット</button>

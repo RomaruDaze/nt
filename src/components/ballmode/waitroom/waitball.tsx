@@ -44,7 +44,7 @@ function WaitBall() {
   return (
     <div className="waitball-container">
       <div className="waitball-header">
-        <h1>ホール投げ</h1>
+        <h1>ボール投げ</h1>
         <div className="waitball-content">
           <input
             type="text"
